@@ -2,9 +2,11 @@
  * Author: Aditya Moghe
 */
 const Discord = require('discord.js');
+const fs = require('fs');
+const data = require("./data.json");
 const client = new Discord.Client();
 const prefix = '!';
-const user_schedules = new Map();
+var user_schedules = new Map();
 client.once('ready', () => {
     console.log('ZoomBot is ready!');
 });
@@ -19,10 +21,16 @@ client.on('message', message =>{
     const command = args.shift().toLowerCase();
     const user_id = message.author.id;
 
-    if (user_schedules[user_id] == null){
+    if (data.user_schedules[user_id] == null){
         class_list = []
         user_schedules[user_id] = class_list;
+        data.user_schedules[user_id] = class_list;
+    } else {
+        data.user_schedules.forEach(classObject => {
+          user_schedules.push(classObject);
+        });
     }
+    console.log(user_schedules);
 
     if (command == "add"){
         if(args.length!=2){
@@ -38,9 +46,11 @@ client.on('message', message =>{
         if (user_schedules[user_id].length<=0){
             return message.channel.send("Your schedule is empty!");
         }
-        for (var i = 0; i<user_schedules[user_id].length;i++){
-            message.channel.send(user_schedules[user_id][i].Name + " " + user_schedules[user_id][i].Link);
+        var allClasses = "";
+        for (var i = 0; i < data.user_schedules[user_id].length;i++){
+            allClasses += data.user_schedules[user_id][i].Name + " " + data.user_schedules[user_id][i].Link + "\n";
         }
+        message.channel.send(allClasses);
     }
     else if(command == "remove"){
         if(args.length!=1){
@@ -56,6 +66,14 @@ client.on('message', message =>{
             }
         }
     }
+
+    try {
+      data.user_schedules = user_schedules;
+      fs.writeFileSync('data.json', JSON.stringify(data));
+    } catch (err) {
+      console.error(err);
+    }
+
 });
 
 client.login('ODEyNzczMjk1OTg3NjIxOTI4.YDFoHg.sXcMgv071mGRVKFYdQ7OCLEcIv8');
