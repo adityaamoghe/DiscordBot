@@ -17,7 +17,8 @@ client.on('message', message =>{
 
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
-
+    const user_id = command.author;
+    
     // if(command === 'tester'){
     //     message.channel.send('Hello Aditya!');
     // }
@@ -38,7 +39,6 @@ client.on('message', message =>{
             return message.channel.send("Add command usage is: !add <Class Name> <Zoom Link");
         }
         else{
-            var user_id = command.author.id;
             if(user_schedules[user_id] == null){
                 class_list = []
                 user_schedules[user_id] = class_list;
@@ -49,7 +49,7 @@ client.on('message', message =>{
         }
     }
     else if (command == "classes"){
-        if (class_list.length<=0){
+        if (user_schedules[user_id].length<=0){
             return message.channel.send("Your schedule is empty!");
         }
         for (x in class_list){
@@ -60,7 +60,7 @@ client.on('message', message =>{
         if(args.length!=1){
             return message.channel.send("Remove command usage is: !remove <Class Name>");
         }
-        else if(class_list.length<=0){
+        else if(user_schedules[user_id].length<=0){
             return message.channel.send("There is nothing to remove!");
         }
         for(var i = 0;i<class_list.length;i++){
