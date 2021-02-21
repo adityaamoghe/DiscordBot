@@ -5,7 +5,6 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const prefix = '!';
 const user_schedules = new Map();
-var class_list = [];
 client.once('ready', () => {
     console.log('ZoomBot is ready!');
 });
@@ -34,26 +33,18 @@ client.on('message', message =>{
     //     message.channel.send('3.    Class Three');
 
     // }
-    if(command = command.author.id){
-        var new_class = {Name: args[0], Link: args[1]};
-        user_schedules[command.author.id] = new_class;
-        message.channel.send(arg[0] + " added to" + command.author.id +"'s schedule!");
-    }
-    else if(command = "my_schedule"){
-        for (schedules in user_schedules[command.author.id]){
-            for(classes in schedules){
-                message.channel.send(classes.Name + ": " + classes.Link);
-            }
-            
-        }
-    }
-    else if (command == "add"){
+    if (command == "add"){
         if(args.length!=2){
             return message.channel.send("Add command usage is: !add <Class Name> <Zoom Link");
         }
         else{
+            var user_id = command.author.id;
+            if(user_schedules[user_id] == null){
+                class_list = []
+                user_schedules[user_id] = class_list;
+            }
             var class_x = {Name: args[0], Link: args[1]}
-            class_list.push(class_x);
+            user_schedules[user_id].push(class_x);
             message.channel.send(`Class Added: ${args[0]}`);
         }
     }
