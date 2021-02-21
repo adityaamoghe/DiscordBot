@@ -52,8 +52,8 @@ client.on('message', message =>{
         if (user_schedules[user_id].length<=0){
             return message.channel.send("Your schedule is empty!");
         }
-        for (x in class_list){
-            message.channel.send(class_list[x].Name + " " + class_list[x].Link);
+        for (var i = 0; i<user_schedules[user_id].length;i++){
+            message.channel.send(user_schedules[user_id][i].Name + " " + user_schedules[user_id][i].Link);
         }
     }
     else if(command == "remove"){
