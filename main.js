@@ -26,8 +26,9 @@ client.on('message', message =>{
         user_schedules[user_id] = class_list;
         data.user_schedules[user_id] = class_list;
     } else {
-        data.user_schedules.forEach(classObject => {
-          user_schedules.push(classObject);
+        let user_ids = Array.from( Object.keys(data.user_schedules) );
+        user_ids.forEach(u_id => {
+          user_schedules[u_id] = data.user_schedules[u_id];
         });
     }
     console.log(user_schedules);
