@@ -44,8 +44,25 @@ client.on('message', message =>{
         }
     }
     else if (command == "classes"){
+        if (class_list.length<=0){
+            return message.channel.send("Your schedule is empty!");
+        }
         for (x in class_list){
             message.channel.send(class_list[x].Name + " " + class_list[x].Link);
+        }
+    }
+    else if(command == "remove"){
+        if(!args.length){
+            return message.channel.send("Please tell me which class to remove");
+        }
+        else if(class_list.length<=0){
+            return message.channel.send("There is nothing to remove!");
+        }
+        for(var i = 0;i<class_list.length;i++){
+            if(class_list[i].Name == args[0]){
+                class_list.splice(i,1);
+                message.channel.send(args[0] + " was removed");
+            }
         }
     }
     //process.exit();
