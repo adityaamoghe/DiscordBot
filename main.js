@@ -24,18 +24,18 @@ client.on('message', message =>{
 
     else if(command === 'useless'){
         message.channel.send('https://theuselessweb.com/');
-        
+
     }
 
     else if(command === 'schedule'){
         message.channel.send('1.    Class One');
         message.channel.send('2.    Class Two');
         message.channel.send('3.    Class Three');
-        
+
     }
     else if (command == "add"){
         if(!args.length){
-            return message.channel.send("Please provide the class name and zoom link you would like to add");
+            return message.channel.send("Please provide the class name and zoom link you would like to add.");
         }
         else{
             var class_x = {Name: args[0], Link: args[1]}
@@ -45,7 +45,7 @@ client.on('message', message =>{
     }
     else if (command == "classes"){
         for (x in class_list){
-            message.channel.send(class_list[x]);
+            message.channel.send(class_list[x].Name + " " + class_list[x].Link);
         }
     }
     //process.exit();
