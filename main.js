@@ -17,8 +17,6 @@ client.on('message', message =>{
 
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
-    const user_id = command.author;
-    
     // if(command === 'tester'){
     //     message.channel.send('Hello Aditya!');
     // }
@@ -39,6 +37,7 @@ client.on('message', message =>{
             return message.channel.send("Add command usage is: !add <Class Name> <Zoom Link");
         }
         else{
+            var user_id = command.author;
             if(user_schedules[user_id] == null){
                 class_list = []
                 user_schedules[user_id] = class_list;
@@ -70,7 +69,6 @@ client.on('message', message =>{
             }
         }
     }
-    //process.exit();
 });
 
 client.login('ODEyNzczMjk1OTg3NjIxOTI4.YDFoHg.sXcMgv071mGRVKFYdQ7OCLEcIv8');
