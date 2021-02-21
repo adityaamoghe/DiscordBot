@@ -17,32 +17,18 @@ client.on('message', message =>{
 
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
-    const user_id = command.author;
-    
-    // if(command === 'tester'){
-    //     message.channel.send('Hello Aditya!');
-    // }
+    const user_id = message.author.id;
 
-    // else if(command === 'useless'){
-    //     message.channel.send('https://theuselessweb.com/');
+    if (user_schedules[user_id] == null){
+        class_list = []
+        user_schedules[user_id] = class_list;
+    }
 
-    // }
-
-    // else if(command === 'schedule'){
-    //     message.channel.send('1.    Class One');
-    //     message.channel.send('2.    Class Two');
-    //     message.channel.send('3.    Class Three');
-
-    // }
     if (command == "add"){
         if(args.length!=2){
-            return message.channel.send("Add command usage is: !add <Class Name> <Zoom Link");
+            return message.channel.send("Add command usage is: !add <Class Name> <Zoom Link>");
         }
         else{
-            if(user_schedules[user_id] == null){
-                class_list = []
-                user_schedules[user_id] = class_list;
-            }
             var class_x = {Name: args[0], Link: args[1]}
             user_schedules[user_id].push(class_x);
             message.channel.send(`Class Added: ${args[0]}`);
