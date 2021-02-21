@@ -56,7 +56,6 @@ client.on('message', message =>{
             }
         }
     }
-    //process.exit();
 });
 
 client.login('ODEyNzczMjk1OTg3NjIxOTI4.YDFoHg.sXcMgv071mGRVKFYdQ7OCLEcIv8');
